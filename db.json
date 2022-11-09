@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "body": "Finish working in this demo",
+      "isCompleted": false
+    },
+    {
+      "id": "2",
+      "body": "Start working with golang",
+      "isCompleted": false
+    },
+    {
+      "id": "3",
+      "body": "better understanding of react",
+      "isCompleted": false
+    }
+  ]
+}

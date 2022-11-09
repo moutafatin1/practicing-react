@@ -41,6 +41,7 @@
     "react/require-default-props": "off",
     "react/button-has-type": "off",
     "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }],
-    "global-require": "off"
+    "global-require": "off",
+    "react/self-closing-comp": "off"
   }
 }
