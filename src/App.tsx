@@ -1,3 +1,4 @@
+import { Button } from '@components';
 import { useState } from 'react';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         >
           Increment
         </button>
+        <Button />
       </div>
     </main>
   );
