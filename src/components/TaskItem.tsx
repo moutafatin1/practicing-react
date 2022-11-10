@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AiFillEdit } from 'react-icons/ai';
 import { IoMdTrash } from 'react-icons/io';
 import { deleteTask } from 'src/api/taskApi';
+import { useEditContext } from 'src/context/EditContext';
 import { cn } from 'src/utils';
 
 type TaskItemProps = {
@@ -14,6 +16,7 @@ type TaskItemProps = {
 export const TaskItem = ({
   task: { body, isCompleted, id },
 }: TaskItemProps) => {
+  const { setModalIsOpen, setTask } = useEditContext();
   const queryClient = useQueryClient();
   const deleteTaskMutation = useMutation(deleteTask);
   const handleDelete = () => {
@@ -40,7 +43,7 @@ export const TaskItem = ({
       />
       <span
         className={cn(
-          'pointer-events-none text-xl font-medium text-gray-800',
+          'pointer-events-none p-2 text-xl font-medium text-gray-800',
           isCompleted && 'text-gray-400'
         )}
       >
@@ -48,6 +51,15 @@ export const TaskItem = ({
       </span>
       <button onClick={handleDelete} className='ml-auto outline-red-500'>
         <IoMdTrash className=' h-8 w-8 cursor-pointer text-red-500 transition-all hover:scale-90 hover:text-red-600 active:scale-100' />
+      </button>
+      <button
+        onClick={() => {
+          setModalIsOpen(true);
+          setTask({ body, id, isCompleted });
+        }}
+        className='outline-teal-500'
+      >
+        <AiFillEdit className='h-8 w-8 text-teal-500 transition-all hover:scale-90 hover:text-teal-600 active:scale-100' />
       </button>
     </li>
   );
