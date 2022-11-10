@@ -1,3 +1,6 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { IoMdTrash } from 'react-icons/io';
+import { deleteTask } from 'src/api/taskApi';
 import { cn } from 'src/utils';
 
 type TaskItemProps = {
@@ -8,7 +11,18 @@ type TaskItemProps = {
   };
 };
 
-export const TaskItem = ({ task: { body, isCompleted } }: TaskItemProps) => {
+export const TaskItem = ({
+  task: { body, isCompleted, id },
+}: TaskItemProps) => {
+  const queryClient = useQueryClient();
+  const deleteTaskMutation = useMutation(deleteTask);
+  const handleDelete = () => {
+    deleteTaskMutation.mutate(id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      },
+    });
+  };
   return (
     <li
       className={cn(
@@ -32,6 +46,9 @@ export const TaskItem = ({ task: { body, isCompleted } }: TaskItemProps) => {
       >
         {body}
       </span>
+      <button onClick={handleDelete} className='ml-auto outline-red-500'>
+        <IoMdTrash className=' h-8 w-8 cursor-pointer text-red-500 transition-all hover:scale-90 hover:text-red-600 active:scale-100' />
+      </button>
     </li>
   );
 };

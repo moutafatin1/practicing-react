@@ -14,3 +14,11 @@ export const fetchTasks = async () => {
   const response = await api.get<Task[]>(URLS.fetchTasksUrl);
   return response.data;
 };
+
+export const addNewTask = (task: string) =>
+  api.post<Task>('tasks', {
+    body: task,
+    isCompleted: false,
+  });
+
+export const deleteTask = (id: number) => api.delete(`tasks/${id}`);
