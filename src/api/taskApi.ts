@@ -10,6 +10,7 @@ export type Task = {
   isCompleted: boolean;
 };
 
-export const fetchTasks = () => {
-  return api.get<Task[]>(URLS.fetchTasksUrl);
+export const fetchTasks = async () => {
+  const response = await api.get<Task[]>(URLS.fetchTasksUrl);
+  return response.data;
 };
