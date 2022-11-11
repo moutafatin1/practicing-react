@@ -22,8 +22,7 @@ export const addNewTask = (task: string) =>
   });
 
 export const deleteTask = (id: number) => api.delete(`tasks/${id}`);
-export const editTaskApi = (task: Task) =>
-  api.put(`tasks/${task.id}`, {
-    body: task.body,
-    isCompleted: task.isCompleted,
+export const editTaskApi = (task: Partial<Task>) =>
+  api.patch(`tasks/${task.id}`, {
+    ...task,
   });

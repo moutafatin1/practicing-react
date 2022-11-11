@@ -15,7 +15,7 @@ export const EditTask = ({ task }: EditTaskProps) => {
 
   const handleEdit = () => {
     editTaskMutation.mutate(
-      { id: task.id, body: editTask, isCompleted: task.isCompleted },
+      { ...task, body: editTask },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['tasks'] });

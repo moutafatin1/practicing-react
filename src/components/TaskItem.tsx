@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AiFillEdit } from 'react-icons/ai';
 import { IoMdTrash } from 'react-icons/io';
-import { deleteTask } from 'src/api/taskApi';
+import { deleteTask, editTaskApi } from 'src/api/taskApi';
 import { useEditContext } from 'src/context/EditContext';
 import { cn } from 'src/utils';
 
@@ -19,12 +19,24 @@ export const TaskItem = ({
   const { setModalIsOpen, setTask } = useEditContext();
   const queryClient = useQueryClient();
   const deleteTaskMutation = useMutation(deleteTask);
+  const updateTaskStatusMutation = useMutation(editTaskApi);
   const handleDelete = () => {
     deleteTaskMutation.mutate(id, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['tasks'] });
       },
     });
+  };
+
+  const handleCheckboxChange = () => {
+    updateTaskStatusMutation.mutate(
+      { isCompleted: !isCompleted, id },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['tasks'] });
+        },
+      }
+    );
   };
   return (
     <li
@@ -35,6 +47,7 @@ export const TaskItem = ({
     >
       <input
         checked={isCompleted}
+        onChange={handleCheckboxChange}
         type='checkbox'
         className={cn(
           'h-6 w-6 rounded-full text-violet-500 hover:bg-gray-300 hover:text-violet-400 focus:ring-0 focus:ring-transparent',
